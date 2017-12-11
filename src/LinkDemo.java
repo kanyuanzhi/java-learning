@@ -53,3 +53,9 @@ class Node{
     }
 }
 
+class Link{
+    class Node{
+        private String data=null;
+        private Node next = null;
+    }
+}
