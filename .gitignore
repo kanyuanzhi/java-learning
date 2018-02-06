@@ -1,3 +1,5 @@
 .idea
 *.iml
-out/production/java-learning/
+out
+META-INF
+MANIFEST.MF
