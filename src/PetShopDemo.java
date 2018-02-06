@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
 public class PetShopDemo {
-    public static void main(String[] args){
-        Pet c1 = new Cat("cat1","orange", 3);
-        Pet c2 = new Cat("cat2","white", 4);
-        Pet d1 = new Cat("dog1","yellow", 3);
-        Pet d2 = new Cat("dog2","blue", 6);
-        Pet d3 = new Cat("dog3","red", 8);
+    public static void main(String[] args) {
+        Pet c1 = new Cat("cat1", "orange", 3);
+        Pet c2 = new Cat("cat2", "white", 4);
+        Pet d1 = new Cat("dog1", "yellow", 3);
+        Pet d2 = new Cat("dog2", "blue", 6);
+        Pet d3 = new Cat("dog3", "red", 8);
 
         PetShop ps = new PetShop();
         ps.add(c1);
@@ -14,23 +14,28 @@ public class PetShopDemo {
         ps.add(d1);
         ps.add(d2);
         ps.add(d3);
-        ps.search("o");
+        ps.search("or");
+        ps.showAllPets();
+        ps.showSearchResult();
     }
 }
 
-interface Pet{
+interface Pet {
     public abstract String getName();
+
     public abstract String getColor();
+
     public abstract int getAge();
+
     public abstract String getInfo();
 }
 
-class Cat implements Pet{
+class Cat implements Pet {
     private String name;
     private String color;
     private int age;
 
-    public Cat(String name, String color, int age){
+    public Cat(String name, String color, int age) {
         this.setName(name);
         this.setColor(color);
         this.setAge(age);
@@ -38,7 +43,7 @@ class Cat implements Pet{
 
     @Override
     public String getInfo() {
-        return this.getName()+"--"+this.getColor()+"--"+this.getAge();
+        return this.getName() + "--" + this.getColor() + "--" + this.getAge();
     }
 
     @Override
@@ -69,12 +74,12 @@ class Cat implements Pet{
     }
 }
 
-class Dog implements Pet{
+class Dog implements Pet {
     private String name;
     private String color;
     private int age;
 
-    public Dog(String name, String color, int age){
+    public Dog(String name, String color, int age) {
         this.setName(name);
         this.setColor(color);
         this.setAge(age);
@@ -82,7 +87,7 @@ class Dog implements Pet{
 
     @Override
     public String getInfo() {
-        return this.getName()+"--"+this.getColor()+"--"+this.getAge();
+        return this.getName() + "--" + this.getColor() + "--" + this.getAge();
     }
 
     @Override
@@ -113,9 +118,10 @@ class Dog implements Pet{
     }
 }
 
-class PetShop{
+class PetShop {
     private ArrayList<Pet> pets = new ArrayList<Pet>();
 
+    private ArrayList<Pet> searchResult = new ArrayList<Pet>();
 //    private Pet[] pets;
 //    private int foot;
 //    public PetShop(int len){
@@ -136,23 +142,38 @@ class PetShop{
 //        }
 //    }
 
-    public void add(Pet pet){
+    public void add(Pet pet) {
         this.pets.add(pet);
     }
 
-    public ArrayList<Pet> search(String keywords){
+    public void showAllPets() {
+        for (int i = 0; i < this.pets.size(); i++) {
+            System.out.println(this.pets.get(i).getInfo());
+        }
+    }
+
+    public void addSearchResult(Pet pet) {
+        this.searchResult.add(pet);
+    }
+
+    public void showSearchResult() {
+        System.out.println("搜索结果：");
+        for (int i = 0; i < this.searchResult.size(); i++) {
+            System.out.println(this.searchResult.get(i).getInfo());
+        }
+    }
+
+    public ArrayList<Pet> search(String keywords) {
         ArrayList<Pet> result = new ArrayList<Pet>();
-        for (int i = 0; i<this.pets.size(); i++){
+        for (int i = 0; i < this.pets.size(); i++) {
             Pet temp = this.pets.get(i);
-            if (temp!=null){
-                if(temp.getName().indexOf(keywords)!=-1||temp.getColor().indexOf(keywords)!=-1){
-                    result.add(temp);
+            if (temp != null) {
+                if (temp.getName().indexOf(keywords) != -1 || temp.getColor().indexOf(keywords) != -1) {
+                    addSearchResult(temp);
                 }
             }
         }
-        for(int i = 0; i<result.size(); i++){
-            System.out.println(result.get(i).getInfo());
-        }
+
         return result;
     }
 }
